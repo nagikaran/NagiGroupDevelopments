@@ -61,8 +61,7 @@ public class LoginResponseDto {
 
 	private String url;// character varying
 	
-	@JsonProperty("car_key")
-	private JsonNode car_key;// character varying
+	
 	
 	public Integer getUser_login_history_id() {
 		return user_login_history_id == null ? Integer.valueOf(0) : user_login_history_id;
@@ -192,12 +191,5 @@ public class LoginResponseDto {
 		this.url = url;
 	}
 
-	public JsonNode getCar_key() {
-		return car_key;
-	}
-
-	public void setCar_key(JsonNode car_key) {
-		this.car_key = car_key;
-	}
 
 }

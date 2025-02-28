@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.NagiGroup.config.RsaKeyProperties;
 import com.NagiGroup.dto.UserDto;
-import com.NagiGroup.dto.subFolder.SubFolderDto;
 import com.NagiGroup.dto.user.LoginResponseDto;
 import com.NagiGroup.model.User;
 import com.NagiGroup.model.UserMaster;
@@ -29,9 +29,7 @@ import com.NagiGroup.utility.PropertiesReader;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-import com.NagiGroup.utility.PropertiesReader;
-
-
+@CrossOrigin(origins = "*") // Allow requests from all origins
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserController {
@@ -60,7 +58,7 @@ public class UserController {
 		UserDto userDto  = userServiceInterface.loadUserByUsername(user);
 		System.out.println("userDto: "+userDto);
 		if(userDto!=null) {
-			authorizeToken = authorizeTokenController.getAuthorizeToke(userDto.getLogin_user_id(),userDto.getRole_name());
+			authorizeToken = authorizeTokenController.getAuthorizeToke(userDto.getLogin_user_id(),userDto.getRole_name(),userDto);
 			 LoginResponseDto loginResponseDto = new LoginResponseDto();
 			 loginResponseDto.setFirst_name(userDto.getFirst_name());
 			 loginResponseDto.setLast_name(userDto.getLast_name());
@@ -162,9 +160,7 @@ public class UserController {
 			return userServiceInterface.getAllUsers();
 		}
 	    
-	    
-	    
-
+	   
 	    
 
 }

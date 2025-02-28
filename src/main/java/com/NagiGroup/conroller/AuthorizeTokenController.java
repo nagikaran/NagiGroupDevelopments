@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.NagiGroup.dto.UserDto;
 import com.NagiGroup.service.JwtService;
 
 @RestController
@@ -23,9 +24,9 @@ public class AuthorizeTokenController {
 		/* return jwtService.generateToken(username); */
     }
     
-    public String getAuthorizeToke(String user_login_id,String role_name) {
+    public String getAuthorizeToke(String user_login_id,String role_name,UserDto userDto) {
     	
-    	return jwtService.generateToken(user_login_id,role_name);
+    	return jwtService.generateToken(user_login_id,role_name,userDto);
     	
     }
     

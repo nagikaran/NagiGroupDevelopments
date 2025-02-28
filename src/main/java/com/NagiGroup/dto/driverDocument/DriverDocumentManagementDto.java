@@ -1,7 +1,5 @@
 package com.NagiGroup.dto.driverDocument;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -10,7 +8,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class DriverDocumentManagementDto {
-	
+	private int driver_documents_id;
 	private String document_name;
 	private String original_document_name;
 	private String document_path;
@@ -59,6 +57,12 @@ public class DriverDocumentManagementDto {
 	}
 	public void setDriver_name(String driver_name) {
 		this.driver_name = driver_name;
+	}
+	public int getDriver_documents_id() {
+		return driver_documents_id;
+	}
+	public void setDriver_documents_id(int driver_documents_id) {
+		this.driver_documents_id = driver_documents_id;
 	}
 	
 	

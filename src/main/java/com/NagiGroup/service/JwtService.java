@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.NagiGroup.dto.UserDto;
+
 @Service
 public class JwtService {
 	 private final JwtEncoder jwtEncoder;
@@ -17,7 +19,7 @@ public class JwtService {
 	        this.jwtEncoder = jwtEncoder;
 	    }
 
-	    public String generateToken(String username,String role_name) {
+	    public String generateToken(String username,String role_name,UserDto userDto) {
 	        Instant now = Instant.now();
 	        JwtClaimsSet claims = JwtClaimsSet.builder()
 	                .issuer("self")
@@ -26,6 +28,7 @@ public class JwtService {
 	                .subject(username)
 	                .claim("role_name", "ROLE_" +role_name)
 	                .claim("scope", "read")
+	                .claim("userId", userDto.getUser_id())
 	                .build();
 
 	        return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

@@ -1,6 +1,7 @@
 package com.NagiGroup.security;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.NagiGroup.config.RsaKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
@@ -77,7 +81,11 @@ public class SecurityConfig {
     }
     
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {http
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    	http.cors().and().csrf().disable()
+		.cors().configurationSource(corsConfigurationSource()).and()
+		.csrf()
+				.disable()
         .authorizeHttpRequests()
         .antMatchers("/", "/demo", "/auth/token", "/swagger-ui/**", "/v3/api-docs/**", "/api/user/login", "/api/user/test").permitAll()
         
@@ -91,5 +99,14 @@ public class SecurityConfig {
          return http.build();
 }
 
-
+    @Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 }
